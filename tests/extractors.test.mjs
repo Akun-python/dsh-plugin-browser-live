@@ -3,6 +3,8 @@ import assert from 'node:assert/strict'
 import {
   callArguments,
   foldWindow,
+  isBrowserToolName,
+  browserToolPrefixOf,
   snapshotPayload,
   tabsOf,
   traceStep,
@@ -30,6 +32,28 @@ test('traceStep labels the op after the mcp prefix', () => {
   })
   assert.equal(step.op, 'navigate')
   assert.equal(step.seq, 4)
+  assert.deepEqual(step.args, ['url=a/b'])
+})
+
+test('browser tool names from both providers are folded', () => {
+  assert.equal(isBrowserToolName('mcp__playwright_mcp__browser_click'), true)
+  assert.equal(isBrowserToolName('browser_click'), true)
+  assert.equal(isBrowserToolName('browser_open'), true)
+  assert.equal(isBrowserToolName('read'), false)
+  assert.equal(isBrowserToolName('bash_run'), false)
+  assert.equal(browserToolPrefixOf('browser_navigate'), 'browser_')
+  assert.equal(browserToolPrefixOf('mcp__playwright_mcp__browser_snapshot'), 'mcp__playwright_mcp__browser_')
+  assert.equal(browserToolPrefixOf('read'), undefined)
+})
+
+test('traceStep strips the tool-browser prefix like the mcp prefix', () => {
+  const step = traceStep({
+    type: 'tool/call',
+    seq: 5,
+    time: 2,
+    data: { name: 'browser_open', callId: 'c2', arguments: '{"url":"a/b"}' },
+  })
+  assert.equal(step.op, 'open')
   assert.deepEqual(step.args, ['url=a/b'])
 })
 

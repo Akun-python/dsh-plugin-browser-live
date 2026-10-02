@@ -19,6 +19,7 @@ export interface BrowserPanelProps {
 
 /** Human-readable tool op labels (local install; repo gates route copy through locale dicts). */
 const OP_LABELS: Readonly<Record<string, string>> = {
+  // Playwright MCP provider ops (mcp__playwright_mcp__browser_*).
   navigate: '打开网页',
   click: '点击',
   type: '输入',
@@ -34,6 +35,25 @@ const OP_LABELS: Readonly<Record<string, string>> = {
   go_forward: '前进',
   close: '关闭浏览器',
   wait: '等待',
+  // tool-browser ops (browser_*), including desktop-bridge mode.
+  open: '打开网页',
+  snap: '页面快照',
+  evaluate: '执行脚本',
+  wait_for: '等待',
+  keypress: '按键',
+  back: '后退',
+  forward: '前进',
+  reload: '刷新',
+  tab_list: '标签页列表',
+  tab_new: '新标签页',
+  tab_select: '切换标签页',
+  tab_close: '关闭标签页',
+  upload: '上传',
+  download_wait: '等待下载',
+  download_read: '读取下载',
+  mouse_move: '移动鼠标',
+  mouse_click: '鼠标点击',
+  mouse_drag: '拖拽',
 }
 
 function opLabel(op: string): string {

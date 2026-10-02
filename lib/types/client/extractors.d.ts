@@ -33,8 +33,20 @@ export interface BrowserFrame {
     readonly updatedAt: number;
 }
 export declare const EMPTY_FRAME: BrowserFrame;
-export declare const TOOL_PREFIX = "mcp__playwright_mcp__browser_";
+/**
+ * Tool-name prefixes folded into the browser trace. The Playwright MCP
+ * provider names its browser tools `mcp__playwright_mcp__browser_*`; the
+ * `tool-browser` package (browser-use) names its tools `browser_*` and, in
+ * desktop-bridge mode, drives the app's built-in browser panel through them.
+ */
+export declare const TOOL_PREFIXES: readonly ["mcp__playwright_mcp__browser_", "browser_"];
+/** Backwards-compatible primary prefix (Playwright MCP provider). */
+export declare const TOOL_PREFIX: "mcp__playwright_mcp__browser_";
 export declare const TRACE_CAP = 60;
+/** Whether a tool name denotes a browser tool from a folded provider. */
+export declare function isBrowserToolName(name: string): boolean;
+/** Match a folded tool name against the known prefixes; undefined for none. */
+export declare function browserToolPrefixOf(name: string): string | undefined;
 /** Argument label pairs kept for a browser tool call, ordered and deduped. */
 export declare function callArguments(raw: string | undefined): readonly string[];
 /** Extract one trace step from a browser tool call event. */

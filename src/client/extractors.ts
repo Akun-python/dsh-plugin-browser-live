@@ -46,8 +46,26 @@ export const EMPTY_FRAME: BrowserFrame = {
   updatedAt: 0,
 }
 
-export const TOOL_PREFIX = 'mcp__playwright_mcp__browser_'
+/**
+ * Tool-name prefixes folded into the browser trace. The Playwright MCP
+ * provider names its browser tools `mcp__playwright_mcp__browser_*`; the
+ * `tool-browser` package (browser-use) names its tools `browser_*` and, in
+ * desktop-bridge mode, drives the app's built-in browser panel through them.
+ */
+export const TOOL_PREFIXES = ['mcp__playwright_mcp__browser_', 'browser_'] as const
+/** Backwards-compatible primary prefix (Playwright MCP provider). */
+export const TOOL_PREFIX = TOOL_PREFIXES[0]
 export const TRACE_CAP = 60
+
+/** Whether a tool name denotes a browser tool from a folded provider. */
+export function isBrowserToolName(name: string): boolean {
+  return TOOL_PREFIXES.some(prefix => name.startsWith(prefix))
+}
+
+/** Match a folded tool name against the known prefixes; undefined for none. */
+export function browserToolPrefixOf(name: string): string | undefined {
+  return TOOL_PREFIXES.find(prefix => name.startsWith(prefix))
+}
 
 /** Argument label pairs kept for a browser tool call, ordered and deduped. */
 export function callArguments(raw: string | undefined): readonly string[] {
@@ -77,7 +95,8 @@ export function callArguments(raw: string | undefined): readonly string[] {
 /** Extract one trace step from a browser tool call event. */
 export function traceStep(event: SessionEvent<'tool/call'>): TraceStep {
   const name = String(event.data.name)
-  const op = name.startsWith(TOOL_PREFIX) ? name.slice(TOOL_PREFIX.length) : name
+  const prefix = browserToolPrefixOf(name)
+  const op = prefix === undefined ? name : name.slice(prefix.length)
   return {
     key: `trace-${event.seq}-${event.data.callId}`,
     op,
@@ -138,7 +157,7 @@ export function foldWindow(
   for (const entry of window.entries) {
     if (entry.type !== 'event') continue
     const event = entry.event
-    if (event.type === 'tool/call' && String(event.data.name).startsWith(TOOL_PREFIX)) {
+    if (event.type === 'tool/call' && isBrowserToolName(String(event.data.name))) {
       trace.push(traceStep(event))
       continue
     }
