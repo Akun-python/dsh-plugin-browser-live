@@ -278,7 +278,7 @@ CI（`.github/workflows/ci.yml`）在每次 push/PR 时执行：
 
 ## 📄 许可证
 
-[MIT](./LICENSE) © 2026 sunguangpeng
+[MIT](./LICENSE) © 2026 akun
 
 ## 🔗 相关链接
 

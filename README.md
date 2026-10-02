@@ -290,7 +290,7 @@ When changing source, rebuild via `scripts/build.mjs` and keep the tests green
 
 ## 📄 License
 
-[MIT](./LICENSE) © 2026 sunguangpeng
+[MIT](./LICENSE) © 2026 akun
 
 ## 🔗 Links
 
