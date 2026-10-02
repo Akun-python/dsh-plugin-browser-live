@@ -14,10 +14,12 @@ Watch your agent browse the web in real time — and take the page over with one
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/Akun-python/dsh-plugin-browser-live/pulls)
 
 As your agent drives the web through the Playwright MCP tools
-(`mcp__playwright_mcp__*`), a small floating panel at the bottom-right of the
-Harness desktop app streams the **operation trace**, the **current page URL**,
-**open tabs**, and the latest **page snapshot text** — then hands the current
-page to the built-in sidebar browser with a single click.
+(`mcp__playwright_mcp__*`) — or through the `browser_*` tools of the
+`tool-browser` package, which in desktop-bridge mode drive the app's built-in
+browser panel — a small floating panel at the bottom-right of the Harness
+desktop app streams the **operation trace**, the **current page URL**,
+**open tabs**, and the latest **page snapshot text**. One click hands the
+current page to the built-in sidebar browser.
 
 *Read-only by design, no shell changes, no build needed to install.*
 
@@ -29,7 +31,7 @@ page to the built-in sidebar browser with a single click.
 
 | | |
 |---|---|
-| 📡 **Live mirror** | Every `browser_navigate` / `click` / `type` / `scroll` / `screenshot` … appears in the panel the moment it happens. |
+| 📡 **Live mirror** | Folds every browser tool event — `mcp__playwright_mcp__browser_*` (Playwright MCP provider) and `browser_*` (`tool-browser`, incl. desktop-bridge mode) — the moment it happens. |
 | 🧭 **Current page** | URL, title, and tab strip — always in sync with the latest `browser_snapshot`. |
 | 📋 **Page snapshot** | The model-visible page summary text is shown for quick review. |
 | 🚀 **One-click takeover** | “打开” hands the current URL to the built-in sidebar browser (`ui-sidebar-browser`) so you can keep browsing yourself. |

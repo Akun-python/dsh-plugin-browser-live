@@ -13,7 +13,8 @@
 [![Node](https://img.shields.io/badge/node-%3E%3D24-339933?logo=nodedotjs)](package.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/Akun-python/dsh-plugin-browser-live/pulls)
 
-当智能体通过 Playwright MCP 工具（`mcp__playwright_mcp__*`）浏览网页时，
+当智能体通过 Playwright MCP 工具（`mcp__playwright_mcp__*`），或 `tool-browser`
+包的 `browser_*` 工具（桌面桥模式下直接驱动应用内置浏览器面板）浏览网页时，
 Harness 桌面应用右下角会浮起一个小面板，实时显示**操作轨迹**、**当前页面
 URL**、**打开的标签页**和最近一次的**页面快照文本**——点一下"打开"，当前页面
 就会交到右侧内置浏览器里，由你亲自继续浏览。
@@ -28,7 +29,7 @@ URL**、**打开的标签页**和最近一次的**页面快照文本**——点�
 
 | | |
 |---|---|
-| 📡 **实时镜像** | 每一次 `browser_navigate` / `click` / `type` / `scroll` / `screenshot`… 都会立刻出现在面板里。 |
+| 📡 **实时镜像** | 折叠两类浏览器工具事件——`mcp__playwright_mcp__browser_*`（Playwright MCP）与 `browser_*`（tool-browser，含桌面桥模式）——操作一发生立刻上屏。 |
 | 🧭 **当前页面** | URL、标题、标签页条，始终与最新一次 `browser_snapshot` 同步。 |
 | 📋 **页面快照** | 展示模型可见的页面摘要文本，方便快速核对。 |
 | 🚀 **一键接管** | 点"打开"把当前 URL 交给右侧内置浏览器（`ui-sidebar-browser`），自己接着浏览。 |
