@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run committed-artifact unit tests (Node, no install)
+        run: node --test
+      - name: Smoke-check the shipped runtime bundle
+        run: node -e "
+          const fs=require('fs');
+          const c=fs.readFileSync('lib/client.js','utf8');
+          if(!c.includes('__ModuleLoader__.load')) throw new Error('missing module-loader wrapper');
+          if(!c.includes('shell.overlay')) throw new Error('missing slot registration');
+          if(!c.includes('mcp__playwright_mcp__browser_')) throw new Error('missing tool prefix');
+          console.log('bundle smoke OK');
+        "
+      - name: Validate build helper syntax
+        run: node --check scripts/build.mjs

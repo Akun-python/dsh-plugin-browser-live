@@ -1,0 +1,38 @@
+{
+  "name": "@deepseek-ai/dsh-client-ui-browser-live",
+  "description": "浏览器面板：实时展示 AI 会话中的浏览器操作轨迹与当前页面快照，一键在侧栏内置浏览器打开。 DeepSeek Harness client plugin.",
+  "version": "0.2.0-rc.2",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-ui-renderer"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "src",
+    "lib",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "license": "MIT"
+}

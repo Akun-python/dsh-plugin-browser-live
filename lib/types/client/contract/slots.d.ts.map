@@ -1,0 +1,1 @@
+{"version":3,"file":"slots.d.ts","sourceRoot":"","sources":["../../../../src/client/contract/slots.ts"],"names":[],"mappings":"AAAA,kEAAkE;AAElE,OAAO,QAAQ,kCAAkC,CAAC;IAChD,UAAU,OAAO;QACf;;;;;WAKG;QACH,eAAe,EAAE;YAAE,IAAI,EAAE,MAAM,CAAC;YAAC,KAAK,EAAE,MAAM,CAAA;SAAE,CAAA;KACjD;CACF;AAED,OAAO,EAAE,CAAA"}
